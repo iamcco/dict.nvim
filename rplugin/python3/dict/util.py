@@ -41,13 +41,23 @@ class Util(object):
 
     def query(self, q = '', type = 'base'):
         queryUrl = URL % (self.keyfrom, self.key, request.quote(q))
-        data = request.urlopen(queryUrl).read().decode('utf-8')
         try:
+            data = request.urlopen(queryUrl).read().decode('utf-8')
             data   = json.loads(data)
             data = self.filter(data)
         except ValueError:
             data = {
                 'status': False,
                 'message': errorCode['noQuery'],
+            }
+        except request.URLError as message:
+            data = {
+                'status': False,
+                'message': 'No network'
+            }
+        except Exception as message:
+            data = {
+                'status': False,
+                'message': message
             }
         return data
