@@ -27,4 +27,8 @@ class Dict(object):
             message = data['message']
         else:
             message = 'Search failed：%s' % data['message']
+
+        # escape " and '
+        message = message.replace('"','\\"').replace("'","\\'")
+
         self.vim.command('echo "%s"' % message)
