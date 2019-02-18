@@ -1,7 +1,4 @@
-const request = require('request-promise').defaults({
-  simple: false,
-  resolveWithFullResponse: true
-})
+const fetch = require('node-fetch')
 
 let tkk = '429175.1243284773'
 let Jo = null
@@ -9,7 +6,7 @@ let Jo = null
 async function getTkk () {
   let url = 'https://translate.google.cn/'
   let rsp = await get(url)
-  let tkkMat = rsp.body.match(/tkk:'([\d.]+)'/)
+  let tkkMat = rsp.match(/tkk:'([\d.]+)'/)
   tkk = tkkMat[1]
 }
 
@@ -68,7 +65,6 @@ function tk (a, tkk) {
 
 async function get (url) {
   let options = {
-    url: url,
     method: 'GET',
     headers: {
       'User-Agent': 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Mobile Safari/537.36'
@@ -76,13 +72,13 @@ async function get (url) {
   }
 
   try {
-    let rsp = await request.get(options)
+    let rsp = await fetch(url, options)
 
-    if (rsp.statusCode >= 400) {
+    if (rsp.status >= 400) {
       throw 'Translate failed, please check your network.'
     }
 
-    return rsp
+    return await rsp.text()
   } catch (err) {
     console.error(err)
   }
@@ -125,7 +121,7 @@ module.exports = async (word, from = null, to = null) => {
 
   try {
     let rsp = await get(url)
-    let tranWord = JSON.parse(rsp.body)
+    let tranWord = JSON.parse(rsp)
     let candidate = getCandidate(tranWord)
     let phoneticSymbol = getSymbol(tranWord)
     return {

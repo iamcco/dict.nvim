@@ -50,7 +50,6 @@ function default_1(plugin) {
                 case 0:
                     if (!(method === 'dict_translate')) return [3 /*break*/, 2];
                     logger.info('args: ', args);
-                    logger.info('args[0]: ', args[0]);
                     return [4 /*yield*/, tran_api_1.default(args[0], null, null)];
                 case 1:
                     result = _a.sent();
