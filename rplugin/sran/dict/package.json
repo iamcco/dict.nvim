@@ -1,6 +1,6 @@
 {
   "name": "dict.nvim",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./lib/index.js",
   "repository": "git@github.com:iamcco/dict.nvim.git",
   "author": "iamcco <ooiss@qq.com>",
@@ -11,6 +11,6 @@
   "devDependencies": {
     "@types/node": "^11.9.4",
     "node-fetch": "^2.3.0",
-    "sran.nvim": "^0.0.2"
+    "sran.nvim": "^0.0.6"
   }
 }
